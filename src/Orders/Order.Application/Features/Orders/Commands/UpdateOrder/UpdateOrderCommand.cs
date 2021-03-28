@@ -1,14 +1,15 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Orders.Domain.Common;
-namespace Orders.Domain.Models
+
+namespace Order.Application.Features.Orders.Commands.UpdateOrder
 {
-    /* Order.Domain Layer is created  using the Clean Architecture Pattern*/
-   public class Order: EntityBase
+    public class UpdateOrderCommand : IRequest
     {
+        public int Id { get; set; }
         public string UserName { get; set; }
         public decimal TotalPrice { get; set; }
 
@@ -27,6 +28,5 @@ namespace Orders.Domain.Models
         public string Expiration { get; set; }
         public string CVV { get; set; }
         public int PaymentMethod { get; set; }
-
     }
 }

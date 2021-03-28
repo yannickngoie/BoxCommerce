@@ -1,47 +1,69 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Order.Application.Features.Orders.Commands.CheckOutOrder;
+using Order.Application.Features.Orders.Commands.DeleteOrder;
+using Order.Application.Features.Orders.Commands.UpdateOrder;
+using Order.Application.Features.Orders.Queries.GetOrdersList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Orders.API.Controllers
 {
-    [Route("api/controller")]
     [ApiController]
+    [Route("api/controller")]
     public class OrderController : ControllerBase
     {
-        // GET: api/<OrderController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IMediator _mediator;
+
+        public OrderController(IMediator mediator)
         {
-            return new string[] { "value1", "value2" };
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        // GET api/<OrderController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{userName}", Name = "GetOrder")]
+        [ProducesResponseType(typeof(IEnumerable<OrdersVm>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<OrdersVm>>> GetOrdersByUserName(string userName)
         {
-            return "value";
+           
+            var query = new GetOrdersListQuery(userName);
+            var orders = await _mediator.Send(query);
+            return Ok(orders);
         }
 
-        // POST api/<OrderController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // testing purpose
+        [HttpPost(Name = "CheckoutOrder")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<int>> CheckoutOrder([FromBody] CheckoutOrderCommand command)
         {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
-        // PUT api/<OrderController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut(Name = "UpdateOrder")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
         {
+            await _mediator.Send(command);
+            return NoContent();
         }
 
-        // DELETE api/<OrderController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{id}", Name = "DeleteOrder")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> DeleteOrder(int id)
         {
+            var command = new DeleteOrderCommand() { Id = id };
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }

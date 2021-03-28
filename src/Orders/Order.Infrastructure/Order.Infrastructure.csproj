@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Order.Application\Order.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\NewFolder\" />
+  </ItemGroup>
+
 </Project>

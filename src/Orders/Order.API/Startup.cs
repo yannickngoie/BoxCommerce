@@ -8,8 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Order.Infrastructure;
+using Order.Application;
+using Order.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Order.API
 {
@@ -17,6 +22,7 @@ namespace Order.API
     {
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
         }
 
@@ -27,6 +33,12 @@ namespace Order.API
         {
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddDbContext<OrderContext>(options =>
+                 options.UseSqlServer(Configuration.GetConnectionString("OrderingConnectionString")));
+
+            services.AddApplicationServices();
+            services.AddInfrastructureServices(Configuration);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

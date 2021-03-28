@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Orders.Domain.Models;
 namespace Orders.Application.Contracts.Persistence
 {
-    public interface IOrderRepository : IAsyncRepository<Order>
+    public interface IOrderRepository : IAsyncRepository<CustomerOrder>
     {
-        Task<IEnumerable<Order>> GetOrdersByUserName(string userName);
+        Task<IEnumerable<CustomerOrder>> GetOrdersByUserName(string userName);
     }
 }

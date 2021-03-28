@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EventBus.Messages
 {
-    class IntegratonBasedEvent
+    public class IntegratonBasedEvent
     {
         public IntegratonBasedEvent()
         {
@@ -18,6 +16,7 @@ namespace EventBus.Messages
             CreationDate = createDate;
         }
 
+        /* Use for correlaton*/
         public Guid Id { get; private set; }
 
         public DateTime CreationDate { get; private set; }
