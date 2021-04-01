@@ -13,11 +13,11 @@ namespace Order.Application.Features.Orders.Queries.GetOrdersList
      */
     public class GetOrdersListQuery: IRequest<List<OrdersVm>>
     {
-        public string UserName { get; set; }
+        public string OrderRef { get; set; }
 
-        public GetOrdersListQuery(string userName)
+        public GetOrdersListQuery(string orderRef)
         {
-            UserName = userName ?? throw new ArgumentNullException(nameof(userName));
+            OrderRef = orderRef ?? throw new ArgumentNullException(nameof(orderRef));
         }
     }
 }

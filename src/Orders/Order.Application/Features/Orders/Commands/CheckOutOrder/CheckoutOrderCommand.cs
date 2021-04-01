@@ -1,31 +1,55 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Common.Logging;
 
 namespace Order.Application.Features.Orders.Commands.CheckOutOrder
 {
-    public class CheckoutOrderCommand: IRequest<int>
+    public class CheckoutOrderCommand : IRequest<ServiceResponse>
     {
-        public string UserName { get; set; }
-        public decimal TotalPrice { get; set; }
-
+      
         // BillingAddress
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
-        public string AddressLine { get; set; }
-        public string Country { get; set; }
-        public string State { get; set; }
-        public string ZipCode { get; set; }
-
-        // Payment
-        public string CardName { get; set; }
-        public string CardNumber { get; set; }
-        public string Expiration { get; set; }
-        public string CVV { get; set; }
-        public int PaymentMethod { get; set; }
+        public string PhoneNumber { get; set; }
+        public string IDNumber { get; set; }
+        public string ProductID { get; set; }
+        public string ProductCode { get; set; }
+        public Vehicle items { get; set; }
     }
+
+
+    public class CheckoutOrderItemsCommand
+    {
+        public string ID { get; set; }
+        public string OrderID { get; set; }
+        public string Name { get; set; }
+        public string ProductID { get; set; }
+        public string ProductCode { get; set; }
+        public string Quantity { get; set; }
+        public string Price { get; set; }
+        public string SKU { get; set; }
+        public string Color { get; set; }
+
+    }
+    public class CheckoutOrderComponentCommand
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+
+
+    }
+
+    public class Vehicle
+    {
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Year { get; set; }
+        public string Color { get; set; }
+        public string Component { get; set; }
+    }
+
+
+    
+
+
 }

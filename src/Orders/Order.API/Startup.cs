@@ -15,6 +15,9 @@ using Order.Infrastructure;
 using Order.Application;
 using Order.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Order.API.EventConsumer;
+using EventBus.Messages;
+using Microsoft.Net.Http.Headers;
 
 namespace Order.API
 {
@@ -40,6 +43,39 @@ namespace Order.API
             services.AddApplicationServices();
             services.AddInfrastructureServices(Configuration);
 
+            //services.AddMassTransit(config =>
+            //{
+
+            //    config.AddConsumer<BasketCheckoutConsumer>();
+
+            //    config.UsingRabbitMq((ctx, cfg) =>
+            //    {
+            //        cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+            //        cfg.UseHealthCheck(ctx);
+
+            //        cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c =>
+            //        {
+            //            c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
+            //        });
+            //    });
+            //});
+            //services.AddMassTransitHostedService();
+
+            // General Configuration
+            services.AddScoped<BasketCheckoutConsumer>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "MyPolicy",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader();
+
+                    });
+            });
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -55,6 +91,8 @@ namespace Order.API
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order.API v1"));
+                app.UseCors(options => options.AllowAnyOrigin()
+           .WithHeaders(HeaderNames.ContentType));
             }
 
             app.UseRouting();

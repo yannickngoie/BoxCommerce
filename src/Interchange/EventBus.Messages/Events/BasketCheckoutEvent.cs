@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EventBus.Messages
 {
@@ -25,5 +26,26 @@ namespace EventBus.Messages
         {
             get; set;
         }
+        public List<BasketCheckoutItemEvent> BasketCheckoutItemEvents { get; set; }
+        public List<BasketEventComponent> BasketEventComponents { get; set; }
+    }
+    public class BasketCheckoutItemEvent
+    {
+        public string OrderID { get; set; }
+        public string Name { get; set; }
+        public string Price { get; set; }
+        public string ProductID { get; set; }
+        public string Quantity { get; set; }        
+        public string Color { get; set; }
+
+
+    }
+    public class BasketEventComponent
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+
+
+
     }
 }

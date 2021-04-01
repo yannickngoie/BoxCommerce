@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Orders.Domain.Common;
+using System.Collections.Generic;
+
 namespace Orders.Domain.Models
 {
     /* Order.Domain Layer is created  using the Clean Architecture Pattern*/
-   public class CustomerOrder: EntityBase
+    public class CustomerOrder : EntityBase
     {
         public string UserName { get; set; }
         public decimal TotalPrice { get; set; }
-
+        public string OrderStatus { get; set; }
+        public string OrderNumber { get; set; }
+        public string IDNumber { get; set; }
+        public string ProductID { get; set; }
+        public string ProductCode { get; set; }
         // BillingAddress
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -28,5 +30,8 @@ namespace Orders.Domain.Models
         public string CVV { get; set; }
         public int PaymentMethod { get; set; }
 
+        // Order items
+        //public Vehicle vehicle {get;set;}
     }
 }
+

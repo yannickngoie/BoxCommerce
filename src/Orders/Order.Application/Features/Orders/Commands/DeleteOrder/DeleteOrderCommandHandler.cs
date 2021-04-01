@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Order.Application.Features.Orders.Commands.DeleteOrder
 {
-    class DeleteOrderCommandHandler
+    public class DeleteOrderCommandHandler : IRequestHandler<DeleteOrderCommand>
     {
 
         private readonly IOrderRepository _orderRepository;

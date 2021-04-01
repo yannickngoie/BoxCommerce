@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Order.Application.Contracts.Persistence;
 using Order.Infrastructure.Persistence;
 using Orders.Application.Contracts.Persistence;
 using Orders.Domain.Models;
@@ -10,18 +11,65 @@ using System.Threading.Tasks;
 
 namespace Order.Infrastructure.Repositories
 {
-    public class OrderRepository : RepositoryBase<CustomerOrder>, IOrderRepository
+    public class OrderRepository : RepositoryBase<Orders.Domain.Models.CustomerOrder>, IOrderRepository
     {
         public OrderRepository(OrderContext dbContext) : base(dbContext)
         {
         }
 
-        public async Task<IEnumerable<CustomerOrder>> GetOrdersByUserName(string userName)
+        public async Task<OrderLines> AddAsyncOrderLine(OrderLines entity)
+        {
+            if (entity != null)
+            {
+                _dbContext.OrderLines.Add(entity);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return entity;
+        }
+
+        public Task DeleteAsyncOrderLine(OrderLines id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<OrderLines> GetAsyncOrderLine(OrderLines id)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task DeleteAsyncOrderLine(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<CustomerOrder>> GetOrdersByUserName(string idNumber)
         {
             var orderList = await _dbContext.Orders
-                                .Where(o => o.UserName == userName)
+                                .Where(o => o.IDNumber== idNumber)
                                 .ToListAsync();
             return orderList;
+        }
+
+        public  async Task<CustomerOrder> GetOrderStatus(string orderNumber)
+        {
+            var orderList = await _dbContext.Orders
+                                   .Where(o => o.OrderNumber == orderNumber).FirstAsync();
+
+            return orderList;
+
+        }
+
+        public async Task<Component> AddAsyncComponent(Component entity)
+        {
+            if (entity != null)
+            {
+                _dbContext.Components.Add(entity);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return entity;
         }
     }
 }

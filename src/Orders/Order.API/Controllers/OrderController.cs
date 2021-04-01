@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace Orders.API.Controllers
 {
     [ApiController]
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -26,23 +26,22 @@ namespace Orders.API.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpGet("{userName}", Name = "GetOrder")]
+        [HttpGet("{IDNumber}", Name = "GetOrdersByUserName")]
         [ProducesResponseType(typeof(IEnumerable<OrdersVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<OrdersVm>>> GetOrdersByUserName(string userName)
+        public async Task<ActionResult<IEnumerable<OrdersVm>>> GetOrdersByIDNumber(string IDNumber)
         {
            
-            var query = new GetOrdersListQuery(userName);
+            var query = new GetOrdersListQuery(IDNumber);
             var orders = await _mediator.Send(query);
             return Ok(orders);
         }
 
-        // testing purpose
-        [HttpPost(Name = "CheckoutOrder")]
+        [HttpPost(Name = "CreateOrder")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<int>> CheckoutOrder([FromBody] CheckoutOrderCommand command)
+        public async Task<ActionResult<int>> CreateOrder([FromBody] CheckoutOrderCommand command)
         {
             var result = await _mediator.Send(command);
-            return Ok(result);
+            return Ok("$Order reference is: " + result.Message);
         }
 
         [HttpPut(Name = "UpdateOrder")]

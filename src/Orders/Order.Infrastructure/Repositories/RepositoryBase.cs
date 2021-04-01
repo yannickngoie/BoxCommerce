@@ -61,6 +61,15 @@ namespace Order.Infrastructure.Repositories
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
+        public virtual async Task<T> GetByRefAsync(string orderRef)
+        {
+            return await _dbContext.Set<T>().FindAsync(orderRef);
+        }
+
+        public virtual async Task<T> GetByIdAsync(string orderRef)
+        {
+            return await _dbContext.Set<T>().FindAsync(orderRef);
+        }
 
         public async Task<T> AddAsync(T entity)
         {
@@ -80,5 +89,7 @@ namespace Order.Infrastructure.Repositories
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
+
+
     }
 }

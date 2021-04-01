@@ -8,11 +8,10 @@ namespace Basket.API.Models
     public class BasketCheckout
     {
         public string UserName { get; set; }
-        public decimal TotalPrice { get; set; }
-
         // BillingAddress
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string IdNumber { get; set; }
         public string EmailAddress { get; set; }
         public string AddressLine { get; set; }
         public string Country { get; set; }
@@ -25,6 +24,21 @@ namespace Basket.API.Models
         public string Expiration { get; set; }
         public string CVV { get; set; }
         public int PaymentMethod { get; set; }
+
+        public List<ShoppingCartItem> Items { get; set; }
+        public List<Component> Components { get; set; }
+        public decimal TotalPrice
+        {
+            get
+            {
+                decimal totalprice = 0;
+                foreach (var item in Items)
+                {
+                    totalprice += item.Price * item.Quantity;
+                }
+                return totalprice;
+            }
+        }
     }
 }
 

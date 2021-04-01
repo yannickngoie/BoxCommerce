@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Basket.API.Models
 {
     public class ShoppingCartItem
@@ -8,5 +10,7 @@ namespace Basket.API.Models
         public decimal Price { get; set; }
         public string ProductId { get; set; }
         public string ProductName { get; set; }
+
+
     }
 }
