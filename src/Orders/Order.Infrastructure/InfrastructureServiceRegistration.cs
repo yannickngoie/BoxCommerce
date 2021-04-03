@@ -1,4 +1,5 @@
 ﻿
+using EventBus.Messages;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,17 +28,6 @@ namespace Order.Infrastructure
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IOrderRepository, OrderRepository>();
-
-
-            services.AddMassTransit(config =>
-            {
-                config.UsingRabbitMq((ctx, cfg) =>
-                {
-                    cfg.Host(configuration["EventBusSettings:HostAddress"]);
-                    cfg.UseHealthCheck(ctx);
-                });
-            });
-            services.AddMassTransitHostedService();
 
             services.Configure<EmailSettings>(c => configuration.GetSection("EmailSettings"));
             services.AddTransient<IEmailService, EmailService>();

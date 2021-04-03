@@ -18,7 +18,7 @@ namespace Production.API.Repositories.Interfaces
 
         public async Task <Activity> UpdateWorkItem(Activity item)
         {
-            _dbContext.Products.Update(item);
+            _dbContext.Activities.Update(item);
             await _dbContext.SaveChangesAsync();
             var result = item;
 
@@ -27,7 +27,7 @@ namespace Production.API.Repositories.Interfaces
 
         public async Task<Activity> AddWorkItem(Activity item)
         {
-            _dbContext.Products.Add(item);
+            _dbContext.Activities.Add(item);
             await _dbContext.SaveChangesAsync();
             var result = item;
 

@@ -12,6 +12,7 @@ namespace Common.Logging
 
     public enum Status
     {
+        Created,
         InProgress,
         NotStared,
         InProduction,

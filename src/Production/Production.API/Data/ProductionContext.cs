@@ -11,6 +11,6 @@ namespace Production.API.Data
         {
         }
 
-        public DbSet<Activity> Products { get; set; }
+        public DbSet<Activity> Activities { get; set; }
     }
 }

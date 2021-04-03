@@ -12,7 +12,11 @@ namespace Order.Application.Features.Orders.Commands.UpdateOrder
         public int Id { get; set; }
         public string UserName { get; set; }
         public decimal TotalPrice { get; set; }
-
+        public string OrderStatus { get; set; }
+        public string OrderNumber { get; set; }
+        public string IDNumber { get; set; }
+        public string ProductID { get; set; }
+        public string ProductCode { get; set; }
         // BillingAddress
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -28,5 +32,6 @@ namespace Order.Application.Features.Orders.Commands.UpdateOrder
         public string Expiration { get; set; }
         public string CVV { get; set; }
         public int PaymentMethod { get; set; }
+
     }
 }

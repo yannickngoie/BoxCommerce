@@ -35,8 +35,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{B01053
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.API", "src\Basket.API\Basket.API.csproj", "{DCFE65AD-777D-462E-BB12-D0D610C247FA}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{356245EC-38AC-4F6D-A485-7DDA83056568}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Inventory", "Inventory", "{27421F52-FF38-4527-A132-2E0D66535B97}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.API", "..\Inventory.API\Inventory.API.csproj", "{0329A8CA-FFEF-49BF-8E06-8690CDA65F01}"
@@ -62,6 +60,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{F4807E9D-EC88-4249-A4B9-6BEE0AF6C61B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.AP.UnitTest", "src\Basket.AP.UnitTest\Basket.AP.UnitTest.csproj", "{1313D07F-3FFF-40B9-B4BD-E901E0415EFC}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{75AE5207-9942-43F4-9508-7CDF88344903}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,10 +105,6 @@ Global
 		{DCFE65AD-777D-462E-BB12-D0D610C247FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCFE65AD-777D-462E-BB12-D0D610C247FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCFE65AD-777D-462E-BB12-D0D610C247FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{356245EC-38AC-4F6D-A485-7DDA83056568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{356245EC-38AC-4F6D-A485-7DDA83056568}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{356245EC-38AC-4F6D-A485-7DDA83056568}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{356245EC-38AC-4F6D-A485-7DDA83056568}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0329A8CA-FFEF-49BF-8E06-8690CDA65F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0329A8CA-FFEF-49BF-8E06-8690CDA65F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0329A8CA-FFEF-49BF-8E06-8690CDA65F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -137,6 +133,10 @@ Global
 		{1313D07F-3FFF-40B9-B4BD-E901E0415EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1313D07F-3FFF-40B9-B4BD-E901E0415EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1313D07F-3FFF-40B9-B4BD-E901E0415EFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75AE5207-9942-43F4-9508-7CDF88344903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75AE5207-9942-43F4-9508-7CDF88344903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75AE5207-9942-43F4-9508-7CDF88344903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75AE5207-9942-43F4-9508-7CDF88344903}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,25 +1,14 @@
 version: '3.4'
 
 services:
-  basketdb:
-    image: redis:alpine
 
-  production.api:
-    image: ${DOCKER_REGISTRY-}productionapi
-    build:
-      context: .
-      dockerfile: src/Production/Production.API/Dockerfile
+ orderdb:
+  image: "mcr.microsoft.com/mssql/server:2019-latest"
 
-  basket.api:
-    image: ${DOCKER_REGISTRY-}basketapi
-    build:
-      context: .
-      dockerfile: src/Basket.API/Dockerfile
-
-
-  order.api:
+ order.api:
     image: ${DOCKER_REGISTRY-}orderapi
     build:
       context: .
       dockerfile: src/Orders/Order.API/Dockerfile
+
 

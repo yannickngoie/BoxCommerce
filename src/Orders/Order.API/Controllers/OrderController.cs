@@ -41,7 +41,7 @@ namespace Orders.API.Controllers
         public async Task<ActionResult<int>> CreateOrder([FromBody] CheckoutOrderCommand command)
         {
             var result = await _mediator.Send(command);
-            return Ok("$Order reference is: " + result.Message);
+            return Ok("Order reference is: " + result.Message);
         }
 
         [HttpPut(Name = "UpdateOrder")]

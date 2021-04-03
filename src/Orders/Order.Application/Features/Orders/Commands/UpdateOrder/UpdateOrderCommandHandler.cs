@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Order.Application.Features.Orders.Commands.UpdateOrder
 {
-   public class UpdateOrderCommandHandler
+   public class UpdateOrderCommandHandler: IRequestHandler<UpdateOrderCommand>
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;

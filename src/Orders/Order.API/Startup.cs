@@ -43,26 +43,35 @@ namespace Order.API
             services.AddApplicationServices();
             services.AddInfrastructureServices(Configuration);
 
-            //services.AddMassTransit(config =>
-            //{
+            services.AddMassTransit(config =>
+            {
 
-            //    config.AddConsumer<BasketCheckoutConsumer>();
+                config.AddConsumer<BasketCheckoutConsumer>();
+                config.AddConsumer<InventoryStatusConsumer>();
+                config.AddConsumer<ProductionStatusConsumer>();
 
-            //    config.UsingRabbitMq((ctx, cfg) =>
-            //    {
-            //        cfg.Host(Configuration["EventBusSettings:HostAddress"]);
-            //        cfg.UseHealthCheck(ctx);
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                    cfg.UseHealthCheck(ctx);
 
-            //        cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c =>
-            //        {
-            //            c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
-            //        });
-            //    });
-            //});
-            //services.AddMassTransitHostedService();
+                    cfg.ReceiveEndpoint(EventBusConstants.UpdateOrderQueue, c =>
+                    {
+                        c.ConfigureConsumer<InventoryStatusConsumer>(ctx);
+                    });
+
+                    cfg.ReceiveEndpoint(EventBusConstants.TriggerProductionQueue, c =>
+                    {
+                        c.ConfigureConsumer<ProductionStatusConsumer>(ctx);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
 
             // General Configuration
             services.AddScoped<BasketCheckoutConsumer>();
+            services.AddScoped<InventoryStatusConsumer>();
+            services.AddScoped<ProductionStatusConsumer>();
             services.AddCors(options =>
             {
                 options.AddPolicy(name: "MyPolicy",

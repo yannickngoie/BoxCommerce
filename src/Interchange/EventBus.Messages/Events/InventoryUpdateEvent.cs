@@ -4,8 +4,8 @@ using System.Text;
 
 namespace EventBus.Messages.Events
 {
-   public class StockEvent: IntegratonBasedEvent
-   {
+    public class InventoryUpdateEvent
+    {
         public string OrderID { get; set; }
         public string OrderNumber { get; set; }
         public string Name { get; set; }
@@ -19,6 +19,5 @@ namespace EventBus.Messages.Events
         public string LastName { get; set; }
         public string SKU { get; set; }
         public string OrderStatus { get; set; }
-
     }
 }

@@ -46,7 +46,7 @@ namespace Order.Application.Features.Orders.Commands.CheckOutOrder
             {
                 var orderEntity = _mapper.Map<CustomerOrder>(request);
                 orderEntity.OrderNumber = GenerateOrderNumber();
-                orderEntity.OrderStatus = Status.NotStared.ToString();
+                orderEntity.OrderStatus = Status.Created.ToString();
                 newOrder = await _orderRepository.AddAsync(orderEntity);
                 var newOrderLine = new OrderLines();
 
@@ -62,13 +62,25 @@ namespace Order.Application.Features.Orders.Commands.CheckOutOrder
 
                 }
                 service.Message = orderEntity.OrderNumber;
-                var stockMessage = new StockEvent { ProductID = newOrderLine.ProductID, OrderID = newOrder.Id.ToString() };
+
+                var stockMessage = new StockEvent
+                {
+                    OrderID = newOrder.Id.ToString(),
+                    OrderNumber = orderEntity.OrderNumber,
+                    ProductID = newOrderLine.ProductID,
+                    OrderStatus = orderEntity.OrderStatus,
+                    EmailAddress = orderEntity.EmailAddress,
+                    LastName = orderEntity.LastName,
+                    FirstName = orderEntity.FirstName,
+                    IDNumber = orderEntity.IDNumber,
+                };
 
                 await _publishEndpoint.Publish<StockEvent>(stockMessage);
 
             }
 
             _logger.LogInformation($"Order {newOrder.Id} is successfully created.");
+            _logger.LogInformation($"Inventory check for {newOrder.Id} is successfully sent.");
 
             await SendMail(newOrder);
 
@@ -91,10 +103,10 @@ namespace Order.Application.Features.Orders.Commands.CheckOutOrder
         }
 
 
-        public string GenerateOrderNumber()
+        public static string GenerateOrderNumber()
         {
 
-            Random random = new Random();
+            var random = new Random();
             int length = 16;
             var OrderNumber = "";
             for (var i = 0; i < length; i++)
