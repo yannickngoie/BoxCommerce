@@ -22,7 +22,7 @@ namespace Order.Application.Features.Orders.Queries.GetOrdersList
         }
         public async Task<List<OrdersVm>> Handle(GetOrdersListQuery request, CancellationToken cancellationToken)
         {
-            var orderList = await _orderRepository.GetOrdersByUserName(request.OrderRef);
+            var orderList = await _orderRepository.GetOrdersByRef(request.OrderRef);
             return _mapper.Map<List<OrdersVm>>(orderList);
         }
     }

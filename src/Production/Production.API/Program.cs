@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Common.Utilities;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Inventory.API.Data;
+using Microsoft.Extensions.DependencyInjection;
+using Production.API.Data;
 
 namespace Production.API
 {
@@ -13,12 +13,19 @@ namespace Production.API
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+                      CreateHostBuilder(args)
 
-        }
+               .Build()
+               .MigrateDatabase<ProductionContext>((context, services) =>
+               {
+                  var logger = services.GetService<ILogger<ProductionContext>>();
+                   ProductionContextSeed
+                        .SeedAsync(context, logger)
+                        .Wait();
+               })
+               .Run();
 
-
-
+                }
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>

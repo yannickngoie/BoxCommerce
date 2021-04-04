@@ -1,4 +1,5 @@
-﻿using Production.API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Production.API.Data;
 using Production.API.Models;
 using System;
 using System.Collections.Generic;
@@ -34,14 +35,16 @@ namespace Production.API.Repositories.Interfaces
             return result;
         }
 
-        public Task<List<Activity>> GetItems(int id)
-        {
-            throw new NotImplementedException();
-        }
+    
 
         public Task<string> DeleteWorkItem(string OrderNumber)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<Activity>> GetWorkItems()
+        {
+            return await _dbContext.Activities.ToListAsync();
         }
     }
 }

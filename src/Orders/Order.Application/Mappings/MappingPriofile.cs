@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EventBus.Messages.Events;
+using Order.Application.Features.Orders.Commands.CancelOrder;
 using Order.Application.Features.Orders.Commands.CheckOutOrder;
 using Order.Application.Features.Orders.Commands.UpdateOrder;
 using Order.Application.Features.Orders.Queries.GetOrdersList;
@@ -23,6 +24,7 @@ namespace Order.Application.Mappings
             CreateMap<StockEvent, CheckoutOrderItemsCommand>().ReverseMap();
             CreateMap<Component, CheckoutOrderComponentCommand>().ReverseMap();
             CreateMap<CustomerOrder, UpdateOrderCommand>().ReverseMap();
+            CreateMap<CustomerOrder, CancelOrderCommand>().ReverseMap();
         }
     }
 }

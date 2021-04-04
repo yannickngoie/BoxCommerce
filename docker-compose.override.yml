@@ -2,19 +2,52 @@ version: '3.4'
 
 services:
 
- orderdb:
-  container_name: orderdb
+ sqlservdb:
+  container_name: sqlservdb
   environment:
-    SA_PASSWORD: "password"
+    SA_PASSWORD: "P@ssword1"
     ACCEPT_EULA: "Y"
     restart: always
   ports:
     - "1433:1433"
 
+ rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+
+
  order.api:
    container_name: order.api
    environment:
      - ASPNETCORE_ENVIRONMENT=Development
-      "ConnectionStrings:OrderingConnectionString:orderdb;Initial Catalog=Ordersdb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+     - "ConnectionStrings:OrderingConnectionString=Data Source=sqlservdb;Initial Catalog=ordersdb; User Id=sa;Password=P@assword1;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+   depends_on:
+   - sqlservdb
+   - rabbitmq
    ports:
-      - "80"
+      - "8000:80" 
+
+ inventory.api:
+  container_name: inventory.api
+  environment:
+    - ASPNETCORE_ENVIRONMENT=Development
+    - "ConnectionStrings:OrderingConnectionString=Data Source=sqlservdb;Initial Catalog=inventorydb; User Id=sa;Password=P@assword1;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+  depends_on:
+   - sqlservdb
+   - rabbitmq
+  ports:
+      - "8001:80"
+
+ production.api:
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - "ConnectionStrings:OrderingConnectionString=Data Source=sqlservdb;Initial Catalog=productiondb; User Id=sa;Password=P@assword1;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+    depends_on:
+    - sqlservdb
+    - rabbitmq
+    ports:
+      - "8002:80"
+

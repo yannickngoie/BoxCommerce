@@ -90,6 +90,14 @@ namespace Order.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task<T> CancelOrderAsync(T entity)
+        {
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+            return entity;
+
+        }
+
 
     }
 }

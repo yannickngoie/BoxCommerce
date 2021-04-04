@@ -44,10 +44,10 @@ namespace Order.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<CustomerOrder>> GetOrdersByUserName(string idNumber)
+        public async Task<IEnumerable<CustomerOrder>> GetOrdersByRef(string orderRef)
         {
             var orderList = await _dbContext.Orders
-                                .Where(o => o.IDNumber== idNumber)
+                                .Where(o => o.OrderNumber== orderRef)
                                 .ToListAsync();
             return orderList;
         }

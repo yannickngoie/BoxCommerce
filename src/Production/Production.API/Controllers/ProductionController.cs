@@ -38,6 +38,14 @@ namespace Production.API.Controllers
 
             return Ok(await _repository.UpdateWorkItem(item));
         }
+
+        [HttpGet( Name = "GetWorkItems")]
+        [ProducesResponseType(typeof(Activity), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Activity>> GetWorkItems()
+        {
+            var result = await _repository.GetWorkItems();
+            return Ok(result);
+        }
     }
 }
 

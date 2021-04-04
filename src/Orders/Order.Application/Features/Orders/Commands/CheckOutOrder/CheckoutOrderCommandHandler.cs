@@ -61,7 +61,7 @@ namespace Order.Application.Features.Orders.Commands.CheckOutOrder
                     });
 
                 }
-                service.Message = orderEntity.OrderNumber;
+                service.Message = $"Order {newOrder.Id} is successfully created. with reference number {orderEntity.OrderNumber}";
 
                 var stockMessage = new StockEvent
                 {

@@ -22,7 +22,7 @@
       }
     },
     "Order.API": {
-      "commandName": "IISExpress",
+      "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {

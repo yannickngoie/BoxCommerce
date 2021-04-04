@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EventBus.Messages.Events;
+using Common.Utilities;
 using Common.Logging;
 using MassTransit;
 using MassTransit.Mediator;

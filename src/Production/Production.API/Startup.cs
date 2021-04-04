@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Production.API.EventConsumer;
 using EventBus.Messages;
+using GreenPipes;
 
 namespace Production.API
 {
@@ -53,6 +54,7 @@ namespace Production.API
                     cfg.ReceiveEndpoint(EventBusConstants.TriggerProductionQueue, c =>
                     {
                         c.ConfigureConsumer<InventoryConsummer>(ctx);
+                        c.UseMessageRetry(r => r.Immediate(5));
                     });
                 });
             });

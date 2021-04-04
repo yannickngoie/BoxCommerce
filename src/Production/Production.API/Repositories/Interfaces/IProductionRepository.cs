@@ -9,6 +9,7 @@ namespace Production.API.Repositories.Interfaces
     public interface IProductionRepository
     {
         Task<Activity> AddWorkItem(Activity item);
+        Task<List<Activity>> GetWorkItems();
         Task<Activity> UpdateWorkItem(Activity basket);
     }
        

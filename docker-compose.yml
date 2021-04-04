@@ -2,8 +2,11 @@ version: '3.4'
 
 services:
 
- orderdb:
+ sqlservdb:
   image: "mcr.microsoft.com/mssql/server:2019-latest"
+
+ rabbitmq:
+  image: "rabbitmq:latest"
 
  order.api:
     image: ${DOCKER_REGISTRY-}orderapi
@@ -11,4 +14,16 @@ services:
       context: .
       dockerfile: src/Orders/Order.API/Dockerfile
 
+ inventory.api:
+    image: ${DOCKER_REGISTRY-}inventoryapi
+    build:
+      context: .
+      dockerfile: Inventory/Inventory.API/Dockerfile
+
+
+ production.api:
+    image: ${DOCKER_REGISTRY-}productionapi
+    build:
+      context: .
+      dockerfile: src/Production/Production.API/Dockerfile
 

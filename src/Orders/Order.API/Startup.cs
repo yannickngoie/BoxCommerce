@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Order.API.EventConsumer;
 using EventBus.Messages;
 using Microsoft.Net.Http.Headers;
+using GreenPipes;
 
 namespace Order.API
 {
@@ -57,12 +58,16 @@ namespace Order.API
 
                     cfg.ReceiveEndpoint(EventBusConstants.UpdateOrderQueue, c =>
                     {
+                        c.UseMessageRetry(r => r.Immediate(1));
                         c.ConfigureConsumer<InventoryStatusConsumer>(ctx);
+                      
+
                     });
 
                     cfg.ReceiveEndpoint(EventBusConstants.TriggerProductionQueue, c =>
                     {
                         c.ConfigureConsumer<ProductionStatusConsumer>(ctx);
+                        //c.UseMessageRetry(r => r.Immediate(1));
                     });
                 });
             });
@@ -88,7 +93,7 @@ namespace Order.API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order.API", Version = "v2" });
             });
         }
 

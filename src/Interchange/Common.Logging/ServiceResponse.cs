@@ -6,7 +6,7 @@ namespace Common.Logging
 {
     public class ServiceResponse
     {
-        public bool success { get; set; }
+        public bool Success { get; set; }
         public string Message { get; set; }
     }
 
@@ -16,7 +16,9 @@ namespace Common.Logging
         InProgress,
         NotStared,
         InProduction,
-        Completed
+        Completed,
+        Cancelled
+
     }
 
 }

@@ -30,7 +30,8 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/weatherforecast",
-      "publishAllPorts": true
+      "publishAllPorts": true,
+      "ConnectionStrings:OrderingConnectionString": "Data Source=sqlservdb;Initial Catalog=productionDb;User Id=sa;Password=P@ssword1"
     }
   }
 }
