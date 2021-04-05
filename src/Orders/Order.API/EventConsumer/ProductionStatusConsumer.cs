@@ -34,11 +34,13 @@ namespace Order.API.EventConsumer
             var command = _mapper.Map<UpdateOrderCommand>(eventMessage);
 
             command.Id = orderId;
-            command.OrderStatus = eventMessage.OrderStatus;
+
+            
+            command.OrderStatus =  eventMessage.OrderStatus;
 
 
             await _mediator.Send(command);
-            _logger.LogInformation("Production Update for  Work Item  with {OrderId} :", command.Id + " with Order status as " + command.OrderStatus + " sent successfully " + ", CorrelationID " + eventMessage.Id);
+            _logger.LogInformation("Production Update for  Work Item  with {OrderId} :", command.Id + " with Order status as " + command.OrderStatus  + " with correlationID " + eventMessage.CorrelationId);
         }
     }
 }

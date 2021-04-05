@@ -10,6 +10,7 @@ namespace Inventory.API.Mapper
         public InventoryProfiling()
         {
             CreateMap<InventoryUpdateEvent, StockEvent>().ReverseMap();
+            CreateMap<ProductionEvent, StockEvent>().ReverseMap();
         }
 
     }

@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Common.Extensions\Common.Extensions.csproj" />
     <ProjectReference Include="..\..\Interchange\Common.Logging\Common.Logging.csproj" />
     <ProjectReference Include="..\..\Interchange\EventBus.Messages\EventBus.Messages.csproj" />
     <ProjectReference Include="..\..\Utilities\Common.Utilities\Common.Utilities.csproj" />

@@ -38,7 +38,7 @@ namespace Order.Application.Features.Orders.Commands.CheckOutOrder
         public async Task<ServiceResponse> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
         {
 
-            var orderDetails = request.items;
+            var orderDetails = request.Items;
             CustomerOrder newOrder = new CustomerOrder();
             var service = new ServiceResponse();
 
@@ -61,7 +61,7 @@ namespace Order.Application.Features.Orders.Commands.CheckOutOrder
                     });
 
                 }
-                service.Message = $"Order {newOrder.Id} is successfully created. with reference number {orderEntity.OrderNumber}";
+               
 
                 var stockMessage = new StockEvent
                 {
@@ -75,6 +75,7 @@ namespace Order.Application.Features.Orders.Commands.CheckOutOrder
                     IDNumber = orderEntity.IDNumber,
                 };
 
+                service.Message = $"Order {newOrder.Id} is successfully created. with reference number {orderEntity.OrderNumber}";
                 await _publishEndpoint.Publish<StockEvent>(stockMessage);
 
             }
@@ -90,7 +91,7 @@ namespace Order.Application.Features.Orders.Commands.CheckOutOrder
 
         private async Task SendMail(CustomerOrder order)
         {
-            var email = new Email() { To = "ezozkme@gmail.com", Body = $"Order was created.", Subject = "Order was created" };
+            var email = new Email() { To = order.EmailAddress, Body = $"Order was created.", Subject = "Order was created" };
 
             try
             {
@@ -107,7 +108,7 @@ namespace Order.Application.Features.Orders.Commands.CheckOutOrder
         {
 
             var random = new Random();
-            int length = 16;
+            int length = 6;
             var OrderNumber = "";
             for (var i = 0; i < length; i++)
             {

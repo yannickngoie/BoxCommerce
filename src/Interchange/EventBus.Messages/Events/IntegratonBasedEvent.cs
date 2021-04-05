@@ -6,18 +6,18 @@ namespace EventBus.Messages
     {
         public IntegratonBasedEvent()
         {
-            Id = Guid.NewGuid();
+            CorrelationId = Guid.NewGuid();
             CreationDate = DateTime.UtcNow;
         }
 
         public IntegratonBasedEvent(Guid id, DateTime createDate)
         {
-            Id = id;
+            CorrelationId = id;
             CreationDate = createDate;
         }
 
         /* Use for correlaton*/
-        public Guid Id { get; private set; }
+        public Guid  CorrelationId { get; private set; }
 
         public DateTime CreationDate { get; private set; }
 

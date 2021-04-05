@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common.Logging;
+using Microsoft.EntityFrameworkCore;
 using Production.API.Data;
 using Production.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Production.API.Repositories.Interfaces
@@ -15,7 +17,13 @@ namespace Production.API.Repositories.Interfaces
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
- 
+
+
+
+        public async Task<IReadOnlyList<Activity>> GetItem(Expression<Func<Activity, bool>> predicate)
+        {
+            return await _dbContext.Set<Activity>().Where(predicate).ToListAsync();
+        }
 
         public async Task <Activity> UpdateWorkItem(Activity item)
         {
@@ -33,9 +41,8 @@ namespace Production.API.Repositories.Interfaces
             var result = item;
 
             return result;
-        }
+        }   
 
-    
 
         public Task<string> DeleteWorkItem(string OrderNumber)
         {
@@ -45,6 +52,30 @@ namespace Production.API.Repositories.Interfaces
         public async Task<List<Activity>> GetWorkItems()
         {
             return await _dbContext.Activities.ToListAsync();
+        }
+
+        public async Task<Activity> CompleteWorkItem(Activity item)
+        {
+            Expression<Func<Activity, bool>> findWorkItem = o => o.OrderNumber == o.OrderNumber;
+            var result = await GetItem(findWorkItem);
+            var itemToComplete = new Activity();
+
+            if (result.Any())
+            {
+                itemToComplete = result.FirstOrDefault();
+
+                itemToComplete.OrderStatus = Status.Completed.ToString();
+
+                _dbContext.Activities.Update(itemToComplete);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return itemToComplete;
+        }
+
+        public Task DeleteItem(string item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

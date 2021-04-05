@@ -29,7 +29,6 @@ namespace Order.Application.Features.Orders.Commands.CancelOrder
         public CancelOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper, IPublishEndpoint publishEndpoint, IEmailService emailService, ILogger<CancelOrderCommandHandler> logger)
         {
             _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
@@ -53,9 +52,11 @@ namespace Order.Application.Features.Orders.Commands.CancelOrder
                 service.Message = ($"Order {command.Id} is was already cancelled.");
 
               _logger.LogInformation($"Order {command.Id} is was already cancelled.");
+
                 }
                 command.OrderStatus = Status.Cancelled.ToString();
                 await _orderRepository.UpdateAsync(command);
+                await SendMail(command);
 
                 service.Success = true;
             }
@@ -69,7 +70,7 @@ namespace Order.Application.Features.Orders.Commands.CancelOrder
 
         private async Task SendMail(CustomerOrder order)
         {
-            var email = new Email() { To = "ezozkme@gmail.com", Body = $"Order was created.", Subject = "Order was created" };
+            var email = new Email() { To = order.EmailAddress, Body = $"Order is cancelled.", Subject = "Order is cancelled" };
 
             try
             {

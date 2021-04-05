@@ -55,21 +55,26 @@ namespace Inventory.API.EventConsumer
             {
                 //SCHEDULE_PRODUCTION
 
-                var eventMessage =  new ProductionEvent
-                    {
-                        OrderID = stockMessage.OrderID,
-                        ProductID = stockMessage.ProductID,
-                        OrderNumber = stockMessage.OrderNumber,
-                        OrderStatus = Status.InProduction.ToString(),
-                        ProductName = stockMessage.Name
-                    };
+                //var eventMessage = new ProductionEvent
+                //{
+                //    OrderID = stockMessage.OrderID,
+                //    ProductID = stockMessage.ProductID,
+                //    OrderNumber = stockMessage.OrderNumber,
+                //    OrderStatus = Status.InProduction.ToString(),
+                //    ProductName = stockMessage.Name
+                //};
+                var eventMessage = _mapper.Map<ProductionEvent>(stockMessage);
+                eventMessage.OrderStatus = Status.InProduction.ToString();
+                
 
-                    await _publishEndpoint.Publish<ProductionEvent>(eventMessage);
-                }
-
-                _logger.LogInformation("StockEvent consumed successfully. Created Order Number : {newOrder}", context.Message.OrderNumber + ", CorrelationID " + eventMessage.Id);
-        });
+                await _publishEndpoint.Publish<ProductionEvent>(eventMessage);
             }
 
+            _logger.LogInformation("StockEvent consumed successfully. Created Order Number : {newOrder}", context.Message.OrderNumber + ", CorrelationID " + stockMessage.CorrelationId);
         }
     }
+}
+            
+
+        
+   

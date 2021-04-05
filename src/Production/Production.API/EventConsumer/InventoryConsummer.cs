@@ -36,26 +36,30 @@ namespace Production.API.EventConsumer
         public async Task Consume(ConsumeContext<ProductionEvent> context)
         {
             var message = context.Message;
+            message.OrderStatus = Status.InProduction.ToString();
             var workitem = new Activity {
 
-                OrderID = message.OrderID, 
-                ProductName = message.ProductName, 
-                OrderStatus = Status.InProduction.ToString(), 
+                OrderID = message.OrderID,
+                ProductName = message.ProductName,
+                ProductID = message.ProductID,
+                OrderStatus = message.OrderStatus, 
                 OrderNumber = message.OrderNumber,
                 Description = message.Description,
                 Component = message.Component
             };
 
             var result = await _repository.AddWorkItem(workitem);
-            var productionUpmessage = _mapper.Map<ProductionEvent>(workitem);
+            
 
-            await _publishEndpoint.Publish<ProductionEvent>(productionUpmessage);
+           
+
+            await _publishEndpoint.Publish<ProductionEvent>(message);
 
             _logger.LogInformation("ProductionEvent consumed successfully. Work Item Id : {OrderNumber}", result.OrderNumber);
 
            
             // need to update customer and order status like email etc 
-            _logger.LogInformation("Order Update for  Work Item OrderNumber : {OrderNumber} ", workitem.OrderNumber + " with Order status as "+ workitem.OrderStatus + " sent successfully "+  context.Message.Id);
+            _logger.LogInformation("Order Update for  Work Item OrderNumber : {OrderNumber} ", workitem.OrderNumber + " with Order status as "+ workitem.OrderStatus + " sent successfully  with correlationId "+  context.Message.CorrelationId);
         }
 
     }

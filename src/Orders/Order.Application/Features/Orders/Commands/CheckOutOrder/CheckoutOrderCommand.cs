@@ -14,7 +14,7 @@ namespace Order.Application.Features.Orders.Commands.CheckOutOrder
         public string IDNumber { get; set; }
         public string ProductID { get; set; }
         public string ProductCode { get; set; }
-        public Vehicle items { get; set; }
+        public Vehicle Items { get; set; }
     }
 
 

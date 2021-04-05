@@ -52,6 +52,12 @@ namespace Order.Infrastructure.Repositories
             return orderList;
         }
 
+        public async Task<IEnumerable<CustomerOrder>> GetAllOrders()
+        {
+            return await _dbContext.Orders.ToListAsync();
+        }
+
+
         public  async Task<CustomerOrder> GetOrderStatus(string orderNumber)
         {
             var orderList = await _dbContext.Orders

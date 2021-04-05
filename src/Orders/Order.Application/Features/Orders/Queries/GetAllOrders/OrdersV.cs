@@ -1,15 +1,15 @@
-﻿
-using Orders.Domain.Common;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Orders.Domain.Models
+namespace Order.Application.Features.Orders.Queries.GetOrdersList
 {
-    /* Order.Domain Layer is created  using the Clean Architecture Pattern*/
-    public class CustomerOrder : EntityBase
+    public class OrdersV
     {
-        
-        public string UserName { get; set; }
-        public decimal TotalPrice { get; set; }
+
+        public string Id { get; set; }
         public string OrderStatus { get; set; }
         public string OrderNumber { get; set; }
         public string IDNumber { get; set; }
@@ -24,15 +24,9 @@ namespace Orders.Domain.Models
         public string State { get; set; }
         public string ZipCode { get; set; }
 
-        // Payment
-        public string CardName { get; set; }
-        public string CardNumber { get; set; }
-        public string Expiration { get; set; }
-        public string CVV { get; set; }
-        public int PaymentMethod { get; set; }
-
-        // Order items
-        //public Vehicle vehicle {get;set;}
+        public string CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string LastModifiedBy { get; set; }
+        public DateTime? LastModifiedDate { get; set; }
     }
 }
-

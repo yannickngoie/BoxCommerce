@@ -14,8 +14,9 @@ namespace Production.API.Mapper
             public ProductionProfile()
             {
                 CreateMap<Activity, ProductionEvent>().ReverseMap();
-              
-            }
+                CreateMap<Activity, CompleteActivity>().ReverseMap(); 
+
+        }
         }
     }
 

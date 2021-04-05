@@ -17,7 +17,8 @@ namespace Common.Logging
         NotStared,
         InProduction,
         Completed,
-        Cancelled
+        Cancelled,
+        ReadyForCollection
 
     }
 

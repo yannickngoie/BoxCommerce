@@ -19,6 +19,7 @@ namespace Order.API.Mapping
             CreateMap<BasketEventComponent, CheckoutOrderComponentCommand>().ReverseMap();
             CreateMap<CheckoutOrderCommand, ProductionEvent>().ReverseMap();
             CreateMap<UpdateOrderCommand, InventoryUpdateEvent>().ReverseMap();
+            CreateMap<ProductionEvent, UpdateOrderCommand>().ReverseMap();
         }
     }
 }

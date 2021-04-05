@@ -37,6 +37,15 @@ namespace Orders.API.Controllers
             return Ok(orders);
         }
 
+        [HttpGet("GetOrders", Name = "GetOrders")]
+        [ProducesResponseType(typeof(IEnumerable<OrdersV>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<OrdersV>>> GetOrders()
+        {
+            var query = new GetAllOrdersQuery();
+            var orders = await _mediator.Send(query);
+            return Ok(orders);
+        }
+
         [HttpPost(Name = "CreateOrder")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> CreateOrder([FromBody] CheckoutOrderCommand command)
@@ -68,15 +77,15 @@ namespace Orders.API.Controllers
 
         }
 
-        [HttpPut(Name = "UpdateOrder")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
-        {
-            await _mediator.Send(command);
-            return NoContent();
-        }
+        //[HttpPut(Name = "UpdateOrder")]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesDefaultResponseType]
+        //public async Task<ActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
+        //{
+        //    await _mediator.Send(command);
+        //    return NoContent();
+        //}
 
         [HttpDelete("{id}", Name = "DeleteOrder")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Common.Logging;
+using EventBus.Messages.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 namespace Production.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
  
     public class ProductionController : ControllerBase
     {
@@ -31,13 +33,32 @@ namespace Production.API.Controllers
 
  
 
-        [HttpPost]
+        [HttpPost ( Name = "UpdateWorkItem")]
         [ProducesResponseType(typeof(Activity), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Activity>> UpdateWorkItem([FromBody] Activity item)
         {
 
             return Ok(await _repository.UpdateWorkItem(item));
         }
+
+        [HttpPost("Complete/", Name = "CompleteWorkItem")]
+        [ProducesResponseType(typeof(CompleteActivity), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Activity>> CompleteWorkItem ([FromBody] CompleteActivity item)
+        {
+            var result = _mapper.Map<Activity>(item);
+            var completeItem = await _repository.CompleteWorkItem(result);
+            if (completeItem.OrderStatus == Status.Completed.ToString())
+            {
+                // Send a notification event for order updateS
+                var updateMesssage = new ProductionEvent { OrderID = completeItem.OrderID, OrderStatus = completeItem.OrderStatus };
+                await _publishEndpoint.Publish<ProductionEvent>(updateMesssage);
+                return Ok($" Order : {completeItem.OrderNumber} has been completed");
+            }
+               return Ok(HttpStatusCode.NotFound);
+        }
+
+
+
 
         [HttpGet( Name = "GetWorkItems")]
         [ProducesResponseType(typeof(Activity), (int)HttpStatusCode.OK)]

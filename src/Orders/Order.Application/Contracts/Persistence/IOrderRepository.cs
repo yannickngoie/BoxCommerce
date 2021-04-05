@@ -10,7 +10,8 @@ namespace Orders.Application.Contracts.Persistence
     public interface IOrderRepository : IAsyncRepository<CustomerOrder>, IAsyncOrderLineRepository<OrderLines>, IAsyncComponentRepository<Component>
     {
         Task<IEnumerable<CustomerOrder>> GetOrdersByRef(string IDNumber);
+        Task<IEnumerable<CustomerOrder>> GetAllOrders();
 
-       
+
     }
 }
