@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.Logging;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Order.Application.Exceptions;
@@ -33,12 +34,19 @@ namespace Order.Application.Features.Orders.Commands.UpdateOrder
             {
                 throw new NotFoundException(nameof(CustomerOrder), request.Id);
             }
+            if (request.OrderStatus == Status.Completed.ToString())
+            {
+                orderToUpdate.OrderStatus = Status.Completed.ToString();
+                await _orderRepository.UpdateAsync(orderToUpdate);
+            }
 
-            _mapper.Map(request, orderToUpdate, typeof(UpdateOrderCommand), typeof(CustomerOrder));
+            else
+            {
+                _mapper.Map(request, orderToUpdate, typeof(UpdateOrderCommand), typeof(CustomerOrder));
+                await _orderRepository.UpdateAsync(orderToUpdate);
+            }
 
-            await _orderRepository.UpdateAsync(orderToUpdate);
-
-            _logger.LogInformation($"Order {orderToUpdate.Id} is successfully updated.");
+                _logger.LogInformation($"Order {orderToUpdate.Id} is successfully updated.");
 
             return Unit.Value;
         }

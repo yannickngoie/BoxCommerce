@@ -29,9 +29,12 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/weatherforecast",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "publishAllPorts": true,
-      "ConnectionStrings:OrderingConnectionString": "Data Source=sqlservdb;Initial Catalog=productionDb;User Id=sa;Password=P@ssword1"
+      "environmentVariables": {
+        "ConnectionStrings:ConnectionString": "Data Source=sqlservdb;Initial Catalog=inventorydb; User Id=sa;Password=P@assword1;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+      }
+
     }
   }
 }

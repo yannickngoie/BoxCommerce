@@ -55,14 +55,6 @@ namespace Inventory.API.EventConsumer
             {
                 //SCHEDULE_PRODUCTION
 
-                //var eventMessage = new ProductionEvent
-                //{
-                //    OrderID = stockMessage.OrderID,
-                //    ProductID = stockMessage.ProductID,
-                //    OrderNumber = stockMessage.OrderNumber,
-                //    OrderStatus = Status.InProduction.ToString(),
-                //    ProductName = stockMessage.Name
-                //};
                 var eventMessage = _mapper.Map<ProductionEvent>(stockMessage);
                 eventMessage.OrderStatus = Status.InProduction.ToString();
                 

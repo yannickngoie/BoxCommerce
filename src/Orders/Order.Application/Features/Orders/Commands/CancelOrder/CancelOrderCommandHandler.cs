@@ -21,7 +21,6 @@ namespace Order.Application.Features.Orders.Commands.CancelOrder
     {
 
         private readonly IOrderRepository _orderRepository;
-        private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ILogger<CancelOrderCommandHandler> _logger;
