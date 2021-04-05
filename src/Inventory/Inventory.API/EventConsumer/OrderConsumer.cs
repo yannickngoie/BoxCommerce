@@ -67,7 +67,8 @@ namespace Inventory.API.EventConsumer
                     await _publishEndpoint.Publish<ProductionEvent>(eventMessage);
                 }
 
-                _logger.LogInformation("StockEvent consumed successfully. Created Order Number : {newOrder}", context.Message.OrderNumber);
+                _logger.LogInformation("StockEvent consumed successfully. Created Order Number : {newOrder}", context.Message.OrderNumber + ", CorrelationID " + eventMessage.Id);
+        });
             }
 
         }

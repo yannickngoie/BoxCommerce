@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EventBus.Messages.Events
 {
-    public class InventoryUpdateEvent
+    public class InventoryUpdateEvent: IntegratonBasedEvent
     {
         public string OrderID { get; set; }
         public string OrderNumber { get; set; }

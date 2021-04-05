@@ -55,7 +55,7 @@ namespace Production.API.EventConsumer
 
            
             // need to update customer and order status like email etc 
-            _logger.LogInformation("Order Update for  Work Item OrderNumber : {OrderNumber} ", workitem.OrderNumber + " with Order status as "+ workitem.OrderStatus + " sent successfully ");
+            _logger.LogInformation("Order Update for  Work Item OrderNumber : {OrderNumber} ", workitem.OrderNumber + " with Order status as "+ workitem.OrderStatus + " sent successfully "+  context.Message.Id);
         }
 
     }

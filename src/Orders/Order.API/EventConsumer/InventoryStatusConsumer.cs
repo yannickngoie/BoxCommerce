@@ -35,6 +35,7 @@ namespace Order.API.EventConsumer
             
 
             await _mediator.Send(command);
+            _logger.LogInformation("Inventory Update for  Work Item  with {OrderId} :", command.Id + " with Order status as " + command.OrderStatus + " sent successfully " + ", CorrelationID " + eventMessage.Id);
         }
             
     }
