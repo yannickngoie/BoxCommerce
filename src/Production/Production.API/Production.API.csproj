@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Interchange\Common.Logging\Common.Logging.csproj" />
     <ProjectReference Include="..\..\Interchange\EventBus.Messages\EventBus.Messages.csproj" />
+    <ProjectReference Include="..\..\Utilities\Common.Utilities\Common.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,12 +35,6 @@
     <PackageReference Include="Polly" Version="7.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Common.Utilities">
-      <HintPath>..\..\Common.Utilities\bin\Debug\net5.0\Common.Utilities.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 
