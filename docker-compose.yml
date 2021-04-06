@@ -6,7 +6,7 @@ services:
   image: "mcr.microsoft.com/mssql/server:2019-latest"
 
  rabbitmq:
-  image: "rabbitmq:latest"
+  image: "rabbitmq:3-management"
 
  order.api:
     image: ${DOCKER_REGISTRY-}orderapi

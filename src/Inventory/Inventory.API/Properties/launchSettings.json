@@ -33,7 +33,7 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "publishAllPorts": true,
       "environmentVariables": {
-       "ConnectionStrings:ConnectionString": "Data Source=sqlservdb;Initial Catalog=inventorydb; User Id=sa;Password=P@assword1;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+        "ConnectionStrings:ConnectionString": "Server=sqlservdb;Database=inventorydb;User=sa;Password=SwN12345678;"
       }
     }
   }

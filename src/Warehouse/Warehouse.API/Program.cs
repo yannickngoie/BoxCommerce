@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 using Warehouse.API.Data;
+using Microsoft.Extensions.DependencyInjection;
+using Common.Utilities;
 
 namespace Warehouse.API
 {
@@ -16,8 +16,8 @@ namespace Warehouse.API
                .Build()
                .MigrateDatabase<StorageContext>((context, services) =>
                {
-                   var logger = services.GetService<ILogger<StorageContext>>();
-                   InventoryContextSeed
+                   var logger = services.GetService<ILogger<StorageContextSeed>>();
+                   StorageContextSeed
                         .SeedAsync(context, logger)
                         .Wait();
                })

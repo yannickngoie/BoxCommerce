@@ -9,9 +9,8 @@ namespace Warehouse.API.Data
 {
     public class StorageContext: DbContext
     {
-        private readonly StorageContext _dbContext;
         public StorageContext(DbContextOptions<StorageContext> options)
-    : base(options)
+: base(options)
         {
         }
 

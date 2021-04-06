@@ -56,7 +56,7 @@ namespace Production.API.Repositories.Interfaces
 
         public async Task<Activity> CompleteWorkItem(Activity item)
         {
-            Expression<Func<Activity, bool>> findWorkItem = o => o.OrderNumber == o.OrderNumber;
+            Expression<Func<Activity, bool>> findWorkItem = o => o.OrderNumber == item.OrderNumber;
             var result = await GetItem(findWorkItem);
             var itemToComplete = new Activity();
 
@@ -65,8 +65,8 @@ namespace Production.API.Repositories.Interfaces
                 itemToComplete = result.FirstOrDefault();
 
                 itemToComplete.OrderStatus = Status.Completed.ToString();
-
-                _dbContext.Activities.Update(itemToComplete);
+                _dbContext.Entry(itemToComplete).State = EntityState.Modified;
+               // _dbContext.Activities.Update(itemToComplete);
                 await _dbContext.SaveChangesAsync();
             }
 

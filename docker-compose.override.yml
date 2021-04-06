@@ -5,7 +5,7 @@ services:
  sqlservdb:
   container_name: sqlservdb
   environment:
-    SA_PASSWORD: "P@ssword1"
+    SA_PASSWORD: "SwN12345678"
     ACCEPT_EULA: "Y"
     restart: always
   ports:
@@ -23,7 +23,8 @@ services:
    container_name: order.api
    environment:
      - ASPNETCORE_ENVIRONMENT=Development
-     - "ConnectionStrings:OrderingConnectionString=Data Source=sqlservdb;Initial Catalog=ordersdb; User Id=sa;Password=P@assword1;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+     - "ConnectionStrings:OrderingConnectionString=Server=sqlservdb;Database=ordersdb;User=sa;Password=SwN12345678;"
+     - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
    depends_on:
    - sqlservdb
    - rabbitmq
@@ -34,7 +35,8 @@ services:
   container_name: inventory.api
   environment:
     - ASPNETCORE_ENVIRONMENT=Development
-    - "ConnectionStrings:OrderingConnectionString=Data Source=sqlservdb;Initial Catalog=inventorydb; User Id=sa;Password=P@assword1;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+    - "ConnectionStrings:ConnectionString=Server=sqlservdb;Database=inventorydb; User=sa;Password=SwN12345678;"
+    - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
   depends_on:
    - sqlservdb
    - rabbitmq
@@ -44,7 +46,8 @@ services:
  production.api:
     environment:
      - ASPNETCORE_ENVIRONMENT=Development
-     - "ConnectionStrings:OrderingConnectionString=Data Source=sqlservdb;Initial Catalog=productiondb; User Id=sa;Password=P@assword1;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+     - "ConnectionStrings:ConnectionString=Server=sqlservdb;Database=productiondb; User=sa;Password=SwN12345678;"
+     - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
     - sqlservdb
     - rabbitmq
